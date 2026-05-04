@@ -10,18 +10,21 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 import app.view.panels.AccueilPanel;
+import app.view.panels.CreerDossierPanel;
 import app.view.panels.EtudiantsPanel;
 
 public class FenetrePrincipale extends JFrame {
 
 	public static final String CARD_ACCUEIL = "ACCUEIL";
     public static final String CARD_ETUDIANTS = "ETUDIANTS";
+    public static final String CARD_CREER_DOSSIER = "CREER_DOSSIER";
 
-    private final CardLayout cardLayout = new CardLayout();
-    private final JPanel panelCentral = new JPanel(cardLayout);
+    private static final CardLayout cardLayout = new CardLayout();
+    private static final JPanel panelCentral = new JPanel(cardLayout);
 
     private final AccueilPanel accueilPanel = new AccueilPanel();
     private final EtudiantsPanel etudiantsPanel = new EtudiantsPanel();
+    private final CreerDossierPanel creerdossierPanel = new CreerDossierPanel();
 
     public FenetrePrincipale() {
         setTitle("CARG-GEST : GESTIONNAIRE CARGAISON");
@@ -31,6 +34,7 @@ public class FenetrePrincipale extends JFrame {
 
         panelCentral.add(accueilPanel, CARD_ACCUEIL);
         panelCentral.add(etudiantsPanel, CARD_ETUDIANTS);
+        panelCentral.add(creerdossierPanel, CARD_CREER_DOSSIER);
 
         setLayout(new BorderLayout());
         add(panelCentral, BorderLayout.CENTER);
@@ -51,6 +55,7 @@ public class FenetrePrincipale extends JFrame {
 
         JMenu menuClient = new JMenu("CLIENT");
         JMenuItem mClientOpCreerDossier = new JMenuItem("Créer dossier");
+        mClientOpCreerDossier.addActionListener(e -> this.showCard(this.CARD_CREER_DOSSIER));
         JMenuItem mClientOpModifier = new JMenuItem("Modifier");
         JMenuItem mClientOpLister = new JMenuItem("Lister");
         menuClient.add(mClientOpCreerDossier); 
@@ -70,6 +75,13 @@ public class FenetrePrincipale extends JFrame {
         /*JMenu menuNav = new JMenu("Navigation");
         JMenuItem accueil = new JMenuItem("Accueil");
         accueil.addActionListener(e -> showCard(CARD_ACCUEIL));
+        
+        accueil.addActionListener(new java.awt.event.ActionListener() {
+		    @Override
+		    public void actionPerformed(java.awt.event.ActionEvent e) {
+		        showView(VIEW_ACCUEIL, true);
+		    }
+		});
         JMenuItem etudiants = new JMenuItem("Étudiants");
         etudiants.addActionListener(e -> showCard(CARD_ETUDIANTS));
         menuNav.add(accueil);
@@ -82,10 +94,11 @@ public class FenetrePrincipale extends JFrame {
         return bar;
     }
 
-    public void showCard(String name) {
+    public static void showCard(String name) {
         cardLayout.show(panelCentral, name);
     }
 
     public EtudiantsPanel getEtudiantsPanel() { return etudiantsPanel; }
+    public CreerDossierPanel getCreerDossierPanel() { return creerdossierPanel; }
 	
 }
